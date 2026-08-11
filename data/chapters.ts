@@ -61,8 +61,8 @@ export const chapters: ReleaseChapter[] = [
     summary:
       "A crypto-fitness game that turns market movement into a physical challenge, with on-device rep counting and shareable competition loops.",
     link: {
-      href: "https://playtrc.xyz",
-      label: "playtrc.xyz",
+      href: "https://playreps.xyz",
+      label: "playreps.xyz",
     },
     media: {
       type: "image",

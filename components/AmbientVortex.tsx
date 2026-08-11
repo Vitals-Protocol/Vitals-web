@@ -66,7 +66,7 @@ export default function AmbientVortex() {
     let targetPointerX = 0;
     let targetPointerY = 0;
 
-    const particles: Particle[] = Array.from({ length: reducedMotion ? 170 : 430 }, (_, index) => ({
+    const particles: Particle[] = Array.from({ length: reducedMotion ? 170 : 260 }, (_, index) => ({
       t: Math.random(),
       speed: 0.000018 + Math.random() * 0.000028,
       lane: index % 10,
@@ -80,7 +80,7 @@ export default function AmbientVortex() {
       const rect = canvas.getBoundingClientRect();
       width = Math.max(1, rect.width);
       height = Math.max(1, rect.height);
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -91,9 +91,22 @@ export default function AmbientVortex() {
       targetPointerY = event.clientY / window.innerHeight - 0.5;
     };
 
+    let lastDraw = 0;
+
     const draw = (time: number) => {
-      const delta = Math.min(32, time - lastTime);
+      frame = 0;
+
+      if (document.hidden) return; // paused; restarted by the visibility listener
+
+      // Cap at ~30fps — the drift is slow enough that 60fps is wasted work.
+      if (time - lastDraw < 33) {
+        frame = requestAnimationFrame(draw);
+        return;
+      }
+
+      const delta = Math.min(64, time - lastTime);
       lastTime = time;
+      lastDraw = time;
 
       pointerX += (targetPointerX - pointerX) * 0.025;
       pointerY += (targetPointerY - pointerY) * 0.025;
@@ -141,9 +154,18 @@ export default function AmbientVortex() {
       if (!reducedMotion) frame = requestAnimationFrame(draw);
     };
 
+    const onVisibilityChange = () => {
+      if (!document.hidden && !reducedMotion && !frame) {
+        lastTime = performance.now();
+        lastDraw = 0;
+        frame = requestAnimationFrame(draw);
+      }
+    };
+
     resize();
     window.addEventListener("resize", resize, { passive: true });
     window.addEventListener("pointermove", onPointerMove, { passive: true });
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     if (reducedMotion) {
       draw(performance.now());
@@ -155,6 +177,7 @@ export default function AmbientVortex() {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, []);
 

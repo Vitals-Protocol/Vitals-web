@@ -639,7 +639,7 @@ export default function VitalsReleaseExperience() {
           <nav className="footer-links" aria-label="Footer navigation">
             <div>
               <span>Chapters</span>
-              <a href="https://playtrc.xyz" target="_blank" rel="noreferrer">
+              <a href="https://playreps.xyz" target="_blank" rel="noreferrer">
                 Reps <em>live</em>
               </a>
               <a href="https://doopapp.com" target="_blank" rel="noreferrer">

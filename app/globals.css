@@ -88,7 +88,6 @@ button,
   transform: translate3d(var(--pointer-x), var(--pointer-y), 0) scale(1.025);
   animation: scene-breathe 26s cubic-bezier(0.46, 0.02, 0.4, 1) infinite alternate;
   will-change: transform;
-  filter: saturate(0.94) contrast(1.04) brightness(0.88);
 }
 
 .scene-light {
@@ -364,11 +363,9 @@ button,
   width: clamp(190px, 30vw, 340px);
   height: auto;
   filter:
-    drop-shadow(0 2px 0 rgba(133, 93, 40, 0.95))
-    drop-shadow(0 5px 0 rgba(102, 70, 30, 0.8))
-    drop-shadow(0 9px 0 rgba(72, 49, 21, 0.6))
-    drop-shadow(0 14px 0 rgba(46, 31, 14, 0.45))
-    drop-shadow(0 30px 44px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 3px 0 rgba(112, 77, 33, 0.9))
+    drop-shadow(0 9px 0 rgba(58, 39, 17, 0.55))
+    drop-shadow(0 28px 40px rgba(0, 0, 0, 0.5))
     drop-shadow(0 0 74px rgba(233, 183, 117, 0.34));
 }
 
@@ -1604,6 +1601,10 @@ button,
 
   .ambient-vortex {
     opacity: 0.48;
+  }
+
+  .ocean-shimmer {
+    display: none;
   }
 
   .site-header {
