@@ -399,87 +399,6 @@ function ChapterModal({ chapter, onClose }: { chapter: Chapter; onClose: () => v
   );
 }
 
-function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement | null>(null);
-  const ringRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (
-      window.matchMedia("(pointer: coarse)").matches ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return;
-    }
-
-    const dot = dotRef.current;
-    const ring = ringRef.current;
-    if (!dot || !ring) return;
-
-    const root = document.documentElement;
-    root.classList.add("has-custom-cursor");
-
-    let targetX = -100;
-    let targetY = -100;
-    let ringX = -100;
-    let ringY = -100;
-    let raf = 0;
-    let shown = false;
-
-    const render = () => {
-      ringX += (targetX - ringX) * 0.16;
-      ringY += (targetY - ringY) * 0.16;
-      dot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0) translate(-50%, -50%)`;
-      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
-      raf = requestAnimationFrame(render);
-    };
-
-    const onPointerMove = (event: PointerEvent) => {
-      targetX = event.clientX;
-      targetY = event.clientY;
-      if (!shown) {
-        shown = true;
-        ringX = targetX;
-        ringY = targetY;
-        dot.dataset.visible = "true";
-        ring.dataset.visible = "true";
-      }
-    };
-
-    const onPointerOver = (event: PointerEvent) => {
-      const target = event.target as Element | null;
-      const interactive = target?.closest?.("a, button, [role='button'], .chapter-card");
-      if (interactive) ring.dataset.hover = "true";
-      else delete ring.dataset.hover;
-    };
-
-    const onDocumentLeave = () => {
-      shown = false;
-      delete dot.dataset.visible;
-      delete ring.dataset.visible;
-    };
-
-    raf = requestAnimationFrame(render);
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    window.addEventListener("pointerover", onPointerOver, { passive: true });
-    document.documentElement.addEventListener("pointerleave", onDocumentLeave);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      root.classList.remove("has-custom-cursor");
-      window.removeEventListener("pointermove", onPointerMove);
-      window.removeEventListener("pointerover", onPointerOver);
-      document.documentElement.removeEventListener("pointerleave", onDocumentLeave);
-    };
-  }, []);
-
-  return (
-    <>
-      <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
-      <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
-    </>
-  );
-}
-
 function IntroOverlay({ leaving }: { leaving: boolean }) {
   return (
     <div className="intro-overlay" data-leaving={leaving || undefined} aria-hidden="true">
@@ -603,8 +522,6 @@ export default function VitalsReleaseExperience() {
       </div>
 
       <AmbientVortex />
-
-      <CustomCursor />
 
       {intro !== "done" ? <IntroOverlay leaving={intro === "leaving"} /> : null}
 

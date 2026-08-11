@@ -1798,62 +1798,6 @@ button,
 }
 
 /* -------------------------------------------------------------------------- */
-/* Custom cursor                                                              */
-/* -------------------------------------------------------------------------- */
-
-html.has-custom-cursor,
-html.has-custom-cursor * {
-  cursor: none !important;
-}
-
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 300;
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 320ms ease;
-}
-
-.cursor-dot[data-visible="true"],
-.cursor-ring[data-visible="true"] {
-  opacity: 1;
-}
-
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--warm-bright);
-  box-shadow:
-    0 0 10px rgba(255, 215, 160, 0.85),
-    0 0 26px rgba(233, 183, 117, 0.4);
-}
-
-.cursor-ring {
-  width: 34px;
-  height: 34px;
-  border: 1px solid rgba(255, 231, 197, 0.42);
-  background: rgba(255, 222, 175, 0.03);
-  transition:
-    opacity 320ms ease,
-    width 260ms ease,
-    height 260ms ease,
-    border-color 260ms ease,
-    background 260ms ease;
-}
-
-.cursor-ring[data-hover="true"] {
-  width: 54px;
-  height: 54px;
-  border-color: rgba(255, 215, 160, 0.85);
-  background: rgba(255, 215, 160, 0.08);
-  box-shadow: 0 0 22px rgba(233, 183, 117, 0.22);
-}
-
-/* -------------------------------------------------------------------------- */
 /* Intro sequence                                                             */
 /* -------------------------------------------------------------------------- */
 
