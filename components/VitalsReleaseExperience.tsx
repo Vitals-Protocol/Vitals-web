@@ -63,6 +63,92 @@ export function BrandMark({ compact = false, large = false }: { compact?: boolea
   );
 }
 
+const socials = [
+  {
+    label: "X",
+    href: "https://x.com/vitalsprotocol",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4.5 4.5l15 15M19.5 4.5l-15 15" />
+      </svg>
+    ),
+  },
+  {
+    label: "Instagram",
+    href: "https://instagram.com/vitalsprotocol",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="4" y="4" width="16" height="16" rx="4.5" />
+        <circle cx="12" cy="12" r="3.6" />
+        <circle cx="16.8" cy="7.2" r="0.9" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+  },
+  {
+    label: "Telegram",
+    href: "https://t.me/vitalsprotocol",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3.5 11.2 20.4 4.8c.8-.3 1.5.5 1.2 1.3l-5.4 13.4c-.3.8-1.4.9-1.9.2l-3.1-4-5-2.9c-.8-.4-.8-1.4.1-1.7Z" />
+        <path d="m11.2 15.7 4.6-7.3" />
+      </svg>
+    ),
+  },
+  {
+    label: "Discord",
+    href: "https://discord.gg/vitalsprotocol",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 8.5c4-2.2 10-2.2 14 0l1.6 7.2c.1.8-.3 1.5-1 1.8l-2.8 1.3c-.8.4-1.7 0-2-.8l-.5-1.2c-1.5.3-3.1.3-4.6 0l-.5 1.2c-.3.8-1.2 1.2-2 .8l-2.8-1.3c-.7-.3-1.1-1-1-1.8L5 8.5Z" />
+        <circle cx="9.3" cy="12.6" r="1.1" fill="currentColor" stroke="none" />
+        <circle cx="14.7" cy="12.6" r="1.1" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/Vitals-Protocol",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="6.5" cy="6" r="2" />
+        <circle cx="6.5" cy="18" r="2" />
+        <circle cx="17.5" cy="9" r="2" />
+        <path d="M6.5 8v8M6.5 14c0-3.5 4-2.5 6.5-3.6 1.6-.7 2.5-1.2 2.5-2.4" />
+      </svg>
+    ),
+  },
+];
+
+function HeroMark() {
+  return (
+    <div className="hero-mark-tilt" aria-hidden="true">
+      <div className="hero-mark-float">
+        <svg className="hero-mark" viewBox="0 0 44 44">
+          <defs>
+            <linearGradient id="hero-mark-gold" x1="0.1" y1="0" x2="0.75" y2="1">
+              <stop offset="0" stopColor="#fff0d4" />
+              <stop offset="0.42" stopColor="#eec27f" />
+              <stop offset="0.78" stopColor="#a8763a" />
+              <stop offset="1" stopColor="#6e4a1e" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M7 8.5 22 36 37 8.5l-8.1 5.1L22 27l-6.9-13.4L7 8.5Z"
+            fill="url(#hero-mark-gold)"
+          />
+          <path
+            d="M14 7.5 22 22l8-14.5"
+            fill="none"
+            stroke="rgba(255, 246, 226, 0.8)"
+            strokeWidth="1.1"
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 function ChapterMedia({ chapter, modal = false }: { chapter: Chapter; modal?: boolean }) {
   if (chapter.media.type === "video") {
     return (
@@ -420,6 +506,7 @@ export default function VitalsReleaseExperience() {
   const rootRef = useRef<HTMLElement | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [openedId, setOpenedId] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [intro, setIntro] = useState<"playing" | "leaving" | "done">("playing");
 
   useEffect(() => {
@@ -447,16 +534,22 @@ export default function VitalsReleaseExperience() {
     let animationFrame = 0;
     let pointerX = 0;
     let pointerY = 0;
+    let tiltX = 0;
+    let tiltY = 0;
 
     const applyPointer = () => {
       root.style.setProperty("--pointer-x", `${pointerX}px`);
       root.style.setProperty("--pointer-y", `${pointerY}px`);
+      root.style.setProperty("--tilt-x", tiltX.toFixed(4));
+      root.style.setProperty("--tilt-y", tiltY.toFixed(4));
       animationFrame = 0;
     };
 
     const onPointerMove = (event: PointerEvent) => {
       pointerX = (event.clientX / window.innerWidth - 0.5) * -12;
       pointerY = (event.clientY / window.innerHeight - 0.5) * -8;
+      tiltX = (event.clientX / window.innerWidth - 0.5) * 2;
+      tiltY = (event.clientY / window.innerHeight - 0.5) * 2;
       if (!animationFrame) animationFrame = requestAnimationFrame(applyPointer);
     };
 
@@ -466,6 +559,17 @@ export default function VitalsReleaseExperience() {
       window.removeEventListener("pointermove", onPointerMove);
     };
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
 
   useEffect(() => {
     if (!openedChapter) return;
@@ -506,26 +610,54 @@ export default function VitalsReleaseExperience() {
 
       <header className="site-header">
         <BrandMark />
-        <nav className="site-nav" aria-label="Primary navigation">
-          <a href="#release-sequence">Release sequence</a>
-          <a href="/manifesto">Manifesto</a>
-          <button type="button" onClick={() => setOpenedId("reps")}>
-            Enter chapter 01
+        <div className="site-menu">
+          <button
+            type="button"
+            className="menu-toggle"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span />
+            <span />
           </button>
-        </nav>
+          {menuOpen ? (
+            <>
+              <div className="menu-backdrop" onClick={() => setMenuOpen(false)} />
+              <nav className="menu-panel" aria-label="Primary navigation">
+                <a href="#release-sequence" onClick={() => setMenuOpen(false)}>
+                  <small>01</small>
+                  Release sequence
+                </a>
+                <a href="/manifesto" onClick={() => setMenuOpen(false)}>
+                  <small>02</small>
+                  Manifesto
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    setOpenedId("reps");
+                  }}
+                >
+                  <small>03</small>
+                  Enter chapter 01
+                </button>
+              </nav>
+            </>
+          ) : null}
+        </div>
       </header>
 
-      <section className="hero-copy" id="manifesto">
-        <span className="hero-kicker">The Vitals release sequence · 01—08</span>
+      <section className="hero" id="top">
+        <HeroMark />
+        <span className="hero-wordmark">Vitals Protocol</span>
         <h1>
           A protocol for
           <br />
           becoming more alive.
         </h1>
-        <p>
-          Products arrive as chapters. Each one solves a real behavior loop; together they become
-          a compounding system for human performance and longevity.
-        </p>
+        <p className="hero-sub">Health is wealth.</p>
       </section>
 
       <section className="release-section" id="release-sequence" aria-label="Vitals product chapters">
@@ -564,11 +696,56 @@ export default function VitalsReleaseExperience() {
       </section>
 
       <footer className="site-footer">
-        <span>Vitals Protocol · Build in public</span>
-        <div className="footer-progress" aria-label="Four of eight chapters revealed">
-          <i style={{ width: "50%" }} />
+        <div className="footer-inner">
+          <div className="footer-brand">
+            <BrandMark />
+            <p>
+              A protocol for becoming more alive.
+              <br />
+              Health is wealth.
+            </p>
+            <div className="footer-socials">
+              {socials.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Vitals Protocol on ${social.label}`}
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <nav className="footer-links" aria-label="Footer navigation">
+            <div>
+              <span>Chapters</span>
+              <a href="https://playtrc.xyz" target="_blank" rel="noreferrer">
+                Reps <em>live</em>
+              </a>
+              <a href="https://doopapp.com" target="_blank" rel="noreferrer">
+                Doop <em>launching soon</em>
+              </a>
+              <a href="#release-sequence">Biohacking</a>
+              <a href="#release-sequence">Longevity</a>
+            </div>
+            <div>
+              <span>Protocol</span>
+              <a href="/manifesto">Manifesto</a>
+              <a href="/manifesto">Tokenomics <em>soon</em></a>
+              <a href="/manifesto">Whitepaper <em>soon</em></a>
+              <a href="#release-sequence">Release sequence</a>
+            </div>
+          </nav>
         </div>
-        <span>04 / 08 revealed</span>
+
+        <div className="footer-bottom">
+          <span>© 2026 Vitals Protocol</span>
+          <span>04 / 08 chapters revealed</span>
+          <span>Build in public</span>
+        </div>
       </footer>
 
       {openedChapter ? (

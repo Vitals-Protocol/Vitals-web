@@ -49,7 +49,7 @@ export default function ManifestoPage() {
 
       <header className="site-header">
         <BrandMark />
-        <nav className="site-nav" aria-label="Manifesto navigation">
+        <nav className="manifesto-nav" aria-label="Manifesto navigation">
           <a href="/">Release sequence</a>
           <a href="/" aria-label="Back to the release experience">
             ← Back
@@ -97,12 +97,12 @@ export default function ManifestoPage() {
         </section>
       </div>
 
-      <footer className="site-footer">
-        <span>Vitals Protocol · Build in public</span>
-        <div className="footer-progress" aria-label="Four of eight chapters revealed">
-          <i style={{ width: "50%" }} />
+      <footer className="site-footer site-footer--compact">
+        <div className="footer-bottom">
+          <span>© 2026 Vitals Protocol</span>
+          <span>Manifesto · v1</span>
+          <span>Build in public</span>
         </div>
-        <span>04 / 08 revealed</span>
       </footer>
     </main>
   );
