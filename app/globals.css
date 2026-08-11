@@ -187,18 +187,12 @@ button,
 .brand-mark {
   width: 31px;
   height: 31px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
 }
 
 .brand-lockup--compact .brand-mark {
   width: 21px;
   height: 21px;
-  stroke-width: 1.35;
 }
 
 .site-menu {
@@ -371,10 +365,9 @@ button,
 .hero-wordmark {
   margin-top: clamp(14px, 2.2vh, 22px);
   color: rgba(255, 244, 224, 0.9);
-  font-size: clamp(11px, 1.2vw, 14px);
+  font-size: clamp(14px, 1.5vw, 19px);
   font-weight: 600;
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
+  letter-spacing: 0.015em;
 }
 
 .hero h1 {
@@ -532,7 +525,7 @@ button,
 .chapter-card {
   position: relative;
   flex: 0 0 auto;
-  width: clamp(146px, 10.25vw, 184px);
+  width: clamp(168px, 12vw, 218px);
   height: clamp(286px, 37.5vh, 395px);
   overflow: hidden;
   border: 0;
@@ -593,7 +586,7 @@ button,
 
 .chapter-card--revealed[data-active="true"] {
   z-index: 12;
-  width: clamp(306px, 23vw, 390px);
+  width: clamp(330px, 25vw, 428px);
   transform: translateY(-12px) scale(1.012);
   border-color: color-mix(in srgb, var(--chapter-accent) 72%, white 20%);
   box-shadow:
@@ -1574,11 +1567,11 @@ button,
 
 @media (max-width: 1050px) {
   .chapter-card {
-    width: 158px;
+    width: 172px;
   }
 
   .chapter-card--revealed[data-active="true"] {
-    width: 340px;
+    width: 356px;
   }
 
   .chapter-modal {
@@ -1633,10 +1626,6 @@ button,
 
   .hero-mark {
     width: clamp(118px, 33vw, 168px);
-  }
-
-  .hero-wordmark {
-    letter-spacing: 0.32em;
   }
 
   .release-section {
@@ -1808,20 +1797,28 @@ button,
 /* Intro sequence                                                             */
 /* -------------------------------------------------------------------------- */
 
-.brand-lockup--large {
-  flex-direction: column;
-  gap: 20px;
-  font-size: clamp(17px, 2vw, 23px);
-  font-weight: 600;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
+.intro-mark {
+  width: clamp(84px, 11vw, 128px);
+  height: auto;
+  filter:
+    drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45))
+    drop-shadow(0 0 54px rgba(233, 183, 117, 0.4));
+  animation: intro-mark-breathe 2.6s ease-in-out infinite alternate;
 }
 
-.brand-lockup--large .brand-mark {
-  width: clamp(54px, 7vw, 74px);
-  height: clamp(54px, 7vw, 74px);
-  stroke-width: 1.2;
-  filter: drop-shadow(0 0 26px rgba(255, 209, 145, 0.5));
+@keyframes intro-mark-breathe {
+  from {
+    transform: scale(0.985);
+    filter:
+      drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45))
+      drop-shadow(0 0 34px rgba(233, 183, 117, 0.3));
+  }
+  to {
+    transform: scale(1.02);
+    filter:
+      drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45))
+      drop-shadow(0 0 64px rgba(233, 183, 117, 0.5));
+  }
 }
 
 .intro-overlay {
@@ -1921,42 +1918,6 @@ button,
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0);
-  }
-}
-
-.intro-tagline {
-  color: rgba(255, 239, 210, 0.6);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-}
-
-.intro-line {
-  display: block;
-  width: 190px;
-  height: 1px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 231, 197, 0.14);
-}
-
-.intro-line::after {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, var(--warm-bright), transparent);
-  box-shadow: 0 0 12px rgba(255, 209, 145, 0.65);
-  content: "";
-  animation: intro-line-sweep 2.1s cubic-bezier(0.45, 0.05, 0.35, 1) 240ms both;
-}
-
-@keyframes intro-line-sweep {
-  from {
-    transform: translateX(-102%);
-  }
-  to {
-    transform: translateX(102%);
   }
 }
 

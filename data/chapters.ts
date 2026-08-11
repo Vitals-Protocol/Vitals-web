@@ -100,10 +100,10 @@ export const chapters: ReleaseChapter[] = [
     signals: ["On-device counting", "Challenge boxes", "Partner launches", "Proof of effort"],
   },
   {
-    id: "nutrition",
+    id: "guts",
     number: "02",
-    title: "Adaptive Nutrition",
-    shortTitle: "Nutrition",
+    title: "Guts",
+    shortTitle: "Guts",
     status: "Launching soon",
     release: "Chapter two · launching soon",
     tagline: "Fuel that changes when you do.",
@@ -149,10 +149,10 @@ export const chapters: ReleaseChapter[] = [
     signals: ["Adaptive plans", "Grocery workflow", "Context-aware swaps", "Adherence engine"],
   },
   {
-    id: "biohacking",
+    id: "biohack",
     number: "03",
     title: "Biohacking",
-    shortTitle: "Biohacking",
+    shortTitle: "Biohack",
     status: "In development",
     release: "Chapter three · in development",
     tagline: "Make progress measurable.",
@@ -241,7 +241,6 @@ export const chapters: ReleaseChapter[] = [
   { id: "redacted-05", number: "05", redacted: true },
   { id: "redacted-06", number: "06", redacted: true },
   { id: "redacted-07", number: "07", redacted: true },
-  { id: "redacted-08", number: "08", redacted: true },
 ];
 
 export function isRedacted(chapter: ReleaseChapter): chapter is RedactedChapter {

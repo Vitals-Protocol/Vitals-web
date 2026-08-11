@@ -9,7 +9,7 @@ A working chapter-based landing page built from the approved visual direction.
 
 - Full-screen cinematic background using the generated coastal compound artwork.
 - Slow background drift, pointer parallax, ocean shimmer, and a procedural canvas vortex.
-- Four revealed chapter cards and four redacted cards.
+- Four revealed chapter cards and three redacted cards.
 - Gentle card expansion on hover/focus.
 - App, Thesis, Mechanism, and Roadmap glimpses inside the expanded card.
 - Click-through chapter dialog with tabbed product narrative.

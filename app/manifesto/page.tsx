@@ -22,7 +22,7 @@ const principles = [
   {
     index: "Principle 02",
     title: "Every product is a chapter",
-    body: "Reps, Doop, Biohacking, Longevity — each release stands alone as a useful product, and each one makes the others more powerful. The sequence is the strategy: reveal, prove, then connect.",
+    body: "Reps, Guts, Biohack, Longevity — each release stands alone as a useful product, and each one makes the others more powerful. The sequence is the strategy: reveal, prove, then connect.",
   },
   {
     index: "Principle 03",

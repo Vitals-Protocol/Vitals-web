@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 const description =
-  "Vitals Protocol is a cinematic release sequence of health products — Reps, Doop, Biohacking, and Longevity — each a chapter that compounds into one system for human performance and longevity.";
+  "Vitals Protocol is a cinematic release sequence of health products — Reps, Guts, Biohack, and Longevity — each a chapter that compounds into one system for human performance and longevity.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://vitalsprotocol.xyz"),
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   keywords: [
     "Vitals Protocol",
     "Reps",
-    "Doop",
+    "Guts",
     "biohacking",
     "longevity",
     "gut health",

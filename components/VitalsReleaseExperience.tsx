@@ -47,17 +47,37 @@ const detailIcons: Record<ChapterDetail["label"], React.ReactNode> = {
   ),
 };
 
-export function BrandMark({ compact = false, large = false }: { compact?: boolean; large?: boolean }) {
+function VitalsGoldMark({ className }: { className?: string }) {
   return (
-    <div
-      className={`brand-lockup${compact ? " brand-lockup--compact" : ""}${
-        large ? " brand-lockup--large" : ""
-      }`}
-    >
-      <svg className="brand-mark" viewBox="0 0 44 44" aria-hidden="true">
-        <path d="M7 8.5 22 36 37 8.5l-8.1 5.1L22 27l-6.9-13.4L7 8.5Z" />
-        <path d="M14 7.5 22 22l8-14.5" />
-      </svg>
+    <svg className={className} viewBox="0 0 44 44" aria-hidden="true">
+      <defs>
+        <linearGradient id="vitals-gold" x1="0.1" y1="0" x2="0.75" y2="1">
+          <stop offset="0" stopColor="#fff0d4" />
+          <stop offset="0.42" stopColor="#eec27f" />
+          <stop offset="0.78" stopColor="#a8763a" />
+          <stop offset="1" stopColor="#6e4a1e" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M7 8.5 22 36 37 8.5l-8.1 5.1L22 27l-6.9-13.4L7 8.5Z"
+        fill="url(#vitals-gold)"
+      />
+      <path
+        d="M14 7.5 22 22l8-14.5"
+        fill="none"
+        stroke="rgba(255, 246, 226, 0.85)"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function BrandMark({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className={`brand-lockup${compact ? " brand-lockup--compact" : ""}`}>
+      <VitalsGoldMark className="brand-mark" />
       <span>Vitals Protocol</span>
     </div>
   );
@@ -79,27 +99,7 @@ function HeroMark() {
   return (
     <div className="hero-mark-tilt" aria-hidden="true">
       <div className="hero-mark-float">
-        <svg className="hero-mark" viewBox="0 0 44 44">
-          <defs>
-            <linearGradient id="hero-mark-gold" x1="0.1" y1="0" x2="0.75" y2="1">
-              <stop offset="0" stopColor="#fff0d4" />
-              <stop offset="0.42" stopColor="#eec27f" />
-              <stop offset="0.78" stopColor="#a8763a" />
-              <stop offset="1" stopColor="#6e4a1e" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M7 8.5 22 36 37 8.5l-8.1 5.1L22 27l-6.9-13.4L7 8.5Z"
-            fill="url(#hero-mark-gold)"
-          />
-          <path
-            d="M14 7.5 22 22l8-14.5"
-            fill="none"
-            stroke="rgba(255, 246, 226, 0.8)"
-            strokeWidth="1.1"
-            strokeLinecap="round"
-          />
-        </svg>
+        <VitalsGoldMark className="hero-mark" />
       </div>
     </div>
   );
@@ -369,9 +369,7 @@ function IntroOverlay({ leaving }: { leaving: boolean }) {
       <div className="intro-veil" />
       <div className="intro-grain" />
       <div className="intro-brand">
-        <BrandMark large />
-        <span className="intro-tagline">The release sequence begins</span>
-        <i className="intro-line" />
+        <VitalsGoldMark className="intro-mark" />
       </div>
     </div>
   );
@@ -599,9 +597,9 @@ export default function VitalsReleaseExperience() {
                 Reps <em>live</em>
               </a>
               <a href="https://doopapp.com" target="_blank" rel="noreferrer">
-                Doop <em>launching soon</em>
+                Guts <em>launching soon</em>
               </a>
-              <a href="#release-sequence">Biohacking</a>
+              <a href="#release-sequence">Biohack</a>
               <a href="#release-sequence">Longevity</a>
             </div>
             <div>
@@ -617,7 +615,7 @@ export default function VitalsReleaseExperience() {
         <div className="footer-bottom">
           <span>© 2026 Vitals Protocol</span>
           <span>All apps maintained by Salus Labs, Inc.</span>
-          <span>04 / 08 chapters revealed</span>
+          <span>04 / 07 chapters revealed</span>
           <span>Build in public</span>
         </div>
       </footer>
