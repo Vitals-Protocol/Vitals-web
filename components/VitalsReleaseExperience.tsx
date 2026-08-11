@@ -47,9 +47,13 @@ const detailIcons: Record<ChapterDetail["label"], React.ReactNode> = {
   ),
 };
 
-function BrandMark({ compact = false }: { compact?: boolean }) {
+export function BrandMark({ compact = false, large = false }: { compact?: boolean; large?: boolean }) {
   return (
-    <div className={`brand-lockup${compact ? " brand-lockup--compact" : ""}`}>
+    <div
+      className={`brand-lockup${compact ? " brand-lockup--compact" : ""}${
+        large ? " brand-lockup--large" : ""
+      }`}
+    >
       <svg className="brand-mark" viewBox="0 0 44 44" aria-hidden="true">
         <path d="M7 8.5 22 36 37 8.5l-8.1 5.1L22 27l-6.9-13.4L7 8.5Z" />
         <path d="M14 7.5 22 22l8-14.5" />
@@ -176,17 +180,25 @@ function ChapterCard({
 
         <p className="chapter-summary">{chapter.summary}</p>
 
-        <div className="chapter-glimpses" aria-hidden={!active}>
-          {chapter.details.map((detail) => (
-            <div className="chapter-glimpse" key={detail.label}>
-              <span className="glimpse-icon">{detailIcons[detail.label]}</span>
-              <span>
-                <strong>{detail.label}</strong>
-                <small>{detail.title}</small>
-              </span>
-            </div>
-          ))}
-        </div>
+        {chapter.link ? (
+          <a
+            className="chapter-link"
+            href={chapter.link.href}
+            target="_blank"
+            rel="noreferrer"
+            aria-hidden={!active}
+            tabIndex={active ? 0 : -1}
+            onClick={(event) => event.stopPropagation()}
+            onKeyDown={(event) => event.stopPropagation()}
+          >
+            <span>Visit {chapter.link.label}</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        ) : (
+          <span className="chapter-soon" aria-hidden={!active}>
+            Full thesis — coming soon
+          </span>
+        )}
 
         <div className="chapter-card-footer">
           <span>{chapter.release}</span>
@@ -273,14 +285,133 @@ function ChapterModal({ chapter, onClose }: { chapter: Chapter; onClose: () => v
           </div>
 
           <div className="modal-actions">
-            <button type="button" className="modal-primary-action">
-              Follow this chapter
-              <span aria-hidden="true">↗</span>
-            </button>
-            <small>Connect this button to your waitlist, product page, or release notification flow.</small>
+            {chapter.link ? (
+              <a
+                className="modal-primary-action"
+                href={chapter.link.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Visit {chapter.link.label}
+                <span aria-hidden="true">↗</span>
+              </a>
+            ) : (
+              <button type="button" className="modal-primary-action">
+                Follow this chapter
+                <span aria-hidden="true">↗</span>
+              </button>
+            )}
+            <small>
+              {chapter.link
+                ? "Opens the live product in a new tab."
+                : "Connect this button to your waitlist, product page, or release notification flow."}
+            </small>
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+function CustomCursor() {
+  const dotRef = useRef<HTMLDivElement | null>(null);
+  const ringRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (
+      window.matchMedia("(pointer: coarse)").matches ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
+
+    const root = document.documentElement;
+    root.classList.add("has-custom-cursor");
+
+    let targetX = -100;
+    let targetY = -100;
+    let ringX = -100;
+    let ringY = -100;
+    let raf = 0;
+    let shown = false;
+
+    const render = () => {
+      ringX += (targetX - ringX) * 0.16;
+      ringY += (targetY - ringY) * 0.16;
+      dot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0) translate(-50%, -50%)`;
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      raf = requestAnimationFrame(render);
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      if (!shown) {
+        shown = true;
+        ringX = targetX;
+        ringY = targetY;
+        dot.dataset.visible = "true";
+        ring.dataset.visible = "true";
+      }
+    };
+
+    const onPointerOver = (event: PointerEvent) => {
+      const target = event.target as Element | null;
+      const interactive = target?.closest?.("a, button, [role='button'], .chapter-card");
+      if (interactive) ring.dataset.hover = "true";
+      else delete ring.dataset.hover;
+    };
+
+    const onDocumentLeave = () => {
+      shown = false;
+      delete dot.dataset.visible;
+      delete ring.dataset.visible;
+    };
+
+    raf = requestAnimationFrame(render);
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("pointerover", onPointerOver, { passive: true });
+    document.documentElement.addEventListener("pointerleave", onDocumentLeave);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      root.classList.remove("has-custom-cursor");
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerover", onPointerOver);
+      document.documentElement.removeEventListener("pointerleave", onDocumentLeave);
+    };
+  }, []);
+
+  return (
+    <>
+      <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
+      <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
+    </>
+  );
+}
+
+function IntroOverlay({ leaving }: { leaving: boolean }) {
+  return (
+    <div className="intro-overlay" data-leaving={leaving || undefined} aria-hidden="true">
+      <div className="intro-image-wrap">
+        <img
+          src="/vitals/coastal-compound.webp"
+          alt=""
+          className="intro-image"
+          draggable={false}
+        />
+      </div>
+      <div className="intro-veil" />
+      <div className="intro-grain" />
+      <div className="intro-brand">
+        <BrandMark large />
+        <span className="intro-tagline">The release sequence begins</span>
+        <i className="intro-line" />
+      </div>
     </div>
   );
 }
@@ -289,6 +420,20 @@ export default function VitalsReleaseExperience() {
   const rootRef = useRef<HTMLElement | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [openedId, setOpenedId] = useState<string | null>(null);
+  const [intro, setIntro] = useState<"playing" | "leaving" | "done">("playing");
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIntro("done");
+      return;
+    }
+    const leaveTimer = window.setTimeout(() => setIntro("leaving"), 2300);
+    const doneTimer = window.setTimeout(() => setIntro("done"), 3150);
+    return () => {
+      window.clearTimeout(leaveTimer);
+      window.clearTimeout(doneTimer);
+    };
+  }, []);
 
   const openedChapter = useMemo(() => {
     const match = chapters.find((chapter) => chapter.id === openedId);
@@ -344,7 +489,7 @@ export default function VitalsReleaseExperience() {
   };
 
   return (
-    <main ref={rootRef} className="vitals-experience">
+    <main ref={rootRef} className="vitals-experience" data-intro={intro}>
       <div className="scene" aria-hidden="true">
         <img src="/vitals/coastal-compound.webp" alt="" className="scene-image" />
         <div className="scene-light" />
@@ -355,11 +500,15 @@ export default function VitalsReleaseExperience() {
 
       <AmbientVortex />
 
+      <CustomCursor />
+
+      {intro !== "done" ? <IntroOverlay leaving={intro === "leaving"} /> : null}
+
       <header className="site-header">
         <BrandMark />
         <nav className="site-nav" aria-label="Primary navigation">
           <a href="#release-sequence">Release sequence</a>
-          <a href="#manifesto">Manifesto</a>
+          <a href="/manifesto">Manifesto</a>
           <button type="button" onClick={() => setOpenedId("reps")}>
             Enter chapter 01
           </button>
@@ -385,7 +534,6 @@ export default function VitalsReleaseExperience() {
             <span>Product universe</span>
             <strong>Four chapters revealed</strong>
           </div>
-          <p>Hover to open a glimpse. Select a chapter for the full thesis and mechanism.</p>
         </div>
 
         <div className="chapter-stage">

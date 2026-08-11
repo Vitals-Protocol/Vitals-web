@@ -24,6 +24,10 @@ export type Chapter = {
   accent: string;
   details: ChapterDetail[];
   signals: string[];
+  link?: {
+    href: string;
+    label: string;
+  };
   redacted?: false;
 };
 
@@ -51,11 +55,15 @@ export const chapters: ReleaseChapter[] = [
     number: "01",
     title: "Reps",
     shortTitle: "Reps",
-    status: "Released",
+    status: "Active",
     release: "Chapter one · live",
     tagline: "Every candle is a rep count.",
     summary:
       "A crypto-fitness game that turns market movement into a physical challenge, with on-device rep counting and shareable competition loops.",
+    link: {
+      href: "https://playtrc.xyz",
+      label: "playtrc.xyz",
+    },
     media: {
       type: "image",
       src: "/vitals/chapter-reps.webp",
@@ -96,11 +104,15 @@ export const chapters: ReleaseChapter[] = [
     number: "02",
     title: "Adaptive Nutrition",
     shortTitle: "Nutrition",
-    status: "In development",
-    release: "Chapter two · next",
+    status: "Launching soon",
+    release: "Chapter two · launching soon",
     tagline: "Fuel that changes when you do.",
     summary:
-      "A responsive nutrition layer that connects goals, routines, food decisions, and real-world adherence instead of producing another static meal plan.",
+      "A gut-health companion that connects goals, routines, food decisions, and real-world adherence — already available on the App Store and Google Play.",
+    link: {
+      href: "https://doopapp.com",
+      label: "doopapp.com",
+    },
     media: {
       type: "image",
       src: "/vitals/chapter-nutrition.webp",
@@ -137,15 +149,15 @@ export const chapters: ReleaseChapter[] = [
     signals: ["Adaptive plans", "Grocery workflow", "Context-aware swaps", "Adherence engine"],
   },
   {
-    id: "biomarkers",
+    id: "biohacking",
     number: "03",
-    title: "Biomarker OS",
-    shortTitle: "Biomarkers",
-    status: "Research",
-    release: "Chapter three · forming",
+    title: "Biohacking",
+    shortTitle: "Biohacking",
+    status: "In development",
+    release: "Chapter three · in development",
     tagline: "Make progress measurable.",
     summary:
-      "A longitudinal health profile that connects labs, wearables, behavior, and goals into a clear view of what is changing and what to do next.",
+      "A biohacking workspace that connects labs, wearables, behavior, and goals into a clear view of what is changing and what to try next.",
     media: {
       type: "image",
       src: "/vitals/chapter-biomarkers.webp",
@@ -186,8 +198,8 @@ export const chapters: ReleaseChapter[] = [
     number: "04",
     title: "Longevity Protocol",
     shortTitle: "Longevity",
-    status: "Vision",
-    release: "Chapter four · horizon",
+    status: "In development",
+    release: "Chapter four · in development",
     tagline: "A system that compounds the right years.",
     summary:
       "The orchestration layer: coordinating movement, nutrition, recovery, measurement, and future interventions around one long-term health objective.",
