@@ -330,11 +330,10 @@ button,
   position: relative;
   z-index: 8;
   display: grid;
-  min-height: 100svh;
-  align-content: center;
-  justify-items: center;
-  padding: 110px 22px 70px;
-  text-align: center;
+  align-content: start;
+  justify-items: start;
+  padding: clamp(58px, 8vh, 80px) clamp(24px, 5vw, 78px) clamp(12px, 2vh, 20px);
+  text-align: left;
   text-shadow: 0 3px 28px rgba(0, 0, 0, 0.45);
 }
 
@@ -360,7 +359,7 @@ button,
 
 .hero-mark {
   display: block;
-  width: clamp(190px, 30vw, 340px);
+  width: clamp(104px, 11.5vw, 150px);
   height: auto;
   filter:
     drop-shadow(0 3px 0 rgba(112, 77, 33, 0.9))
@@ -370,9 +369,9 @@ button,
 }
 
 .hero-wordmark {
-  margin-top: clamp(26px, 4.5vh, 44px);
+  margin-top: clamp(14px, 2.2vh, 22px);
   color: rgba(255, 244, 224, 0.9);
-  font-size: clamp(12px, 1.4vw, 16px);
+  font-size: clamp(11px, 1.2vw, 14px);
   font-weight: 600;
   letter-spacing: 0.42em;
   text-transform: uppercase;
@@ -380,9 +379,9 @@ button,
 
 .hero h1 {
   max-width: 860px;
-  margin: clamp(14px, 2.4vh, 24px) 0 0;
+  margin: clamp(8px, 1.4vh, 12px) 0 0;
   font-family: "Iowan Old Style", "Baskerville", "Times New Roman", serif;
-  font-size: clamp(40px, 5.4vw, 84px);
+  font-size: clamp(32px, 3.8vw, 56px);
   font-weight: 400;
   line-height: 1.02;
   letter-spacing: -0.04em;
@@ -390,10 +389,10 @@ button,
 }
 
 .hero-sub {
-  margin: clamp(18px, 3vh, 28px) 0 0;
+  margin: clamp(10px, 1.8vh, 16px) 0 0;
   color: rgba(255, 224, 178, 0.82);
   font-family: "Iowan Old Style", "Baskerville", Georgia, serif;
-  font-size: clamp(17px, 1.9vw, 25px);
+  font-size: clamp(15px, 1.7vw, 22px);
   font-style: italic;
   letter-spacing: 0.04em;
 }
@@ -420,7 +419,7 @@ button,
 .release-section {
   position: relative;
   z-index: 10;
-  margin-top: clamp(28px, 3.8vh, 58px);
+  margin-top: clamp(8px, 1.8vh, 22px);
   padding-bottom: clamp(60px, 10vh, 120px);
 }
 
@@ -1552,12 +1551,20 @@ button,
   }
 
   .hero {
-    padding-top: 84px;
-    padding-bottom: 40px;
+    padding-top: 70px;
+    padding-bottom: 12px;
+  }
+
+  .hero-mark {
+    width: 140px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 3.6vw, 50px);
   }
 
   .release-section {
-    margin-top: 18px;
+    margin-top: 10px;
   }
 
   .chapter-card {
@@ -1621,12 +1628,11 @@ button,
   }
 
   .hero {
-    min-height: 92svh;
-    padding: 96px 18px 46px;
+    padding: 88px 18px 26px;
   }
 
   .hero-mark {
-    width: clamp(170px, 52vw, 240px);
+    width: clamp(118px, 33vw, 168px);
   }
 
   .hero-wordmark {

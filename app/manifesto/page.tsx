@@ -100,6 +100,7 @@ export default function ManifestoPage() {
       <footer className="site-footer site-footer--compact">
         <div className="footer-bottom">
           <span>© 2026 Vitals Protocol</span>
+          <span>All apps maintained by Salus Labs, Inc.</span>
           <span>Manifesto · v1</span>
           <span>Build in public</span>
         </div>

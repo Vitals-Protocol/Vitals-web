@@ -73,50 +73,6 @@ const socials = [
       </svg>
     ),
   },
-  {
-    label: "Instagram",
-    href: "https://instagram.com/vitalsprotocol",
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="4" y="4" width="16" height="16" rx="4.5" />
-        <circle cx="12" cy="12" r="3.6" />
-        <circle cx="16.8" cy="7.2" r="0.9" fill="currentColor" stroke="none" />
-      </svg>
-    ),
-  },
-  {
-    label: "Telegram",
-    href: "https://t.me/vitalsprotocol",
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M3.5 11.2 20.4 4.8c.8-.3 1.5.5 1.2 1.3l-5.4 13.4c-.3.8-1.4.9-1.9.2l-3.1-4-5-2.9c-.8-.4-.8-1.4.1-1.7Z" />
-        <path d="m11.2 15.7 4.6-7.3" />
-      </svg>
-    ),
-  },
-  {
-    label: "Discord",
-    href: "https://discord.gg/vitalsprotocol",
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M5 8.5c4-2.2 10-2.2 14 0l1.6 7.2c.1.8-.3 1.5-1 1.8l-2.8 1.3c-.8.4-1.7 0-2-.8l-.5-1.2c-1.5.3-3.1.3-4.6 0l-.5 1.2c-.3.8-1.2 1.2-2 .8l-2.8-1.3c-.7-.3-1.1-1-1-1.8L5 8.5Z" />
-        <circle cx="9.3" cy="12.6" r="1.1" fill="currentColor" stroke="none" />
-        <circle cx="14.7" cy="12.6" r="1.1" fill="currentColor" stroke="none" />
-      </svg>
-    ),
-  },
-  {
-    label: "GitHub",
-    href: "https://github.com/Vitals-Protocol",
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="6.5" cy="6" r="2" />
-        <circle cx="6.5" cy="18" r="2" />
-        <circle cx="17.5" cy="9" r="2" />
-        <path d="M6.5 8v8M6.5 14c0-3.5 4-2.5 6.5-3.6 1.6-.7 2.5-1.2 2.5-2.4" />
-      </svg>
-    ),
-  },
 ];
 
 function HeroMark() {
@@ -660,6 +616,7 @@ export default function VitalsReleaseExperience() {
 
         <div className="footer-bottom">
           <span>© 2026 Vitals Protocol</span>
+          <span>All apps maintained by Salus Labs, Inc.</span>
           <span>04 / 08 chapters revealed</span>
           <span>Build in public</span>
         </div>
