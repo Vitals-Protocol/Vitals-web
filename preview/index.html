@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#081013" />
+    <title>Vitals Protocol — Release Sequence</title>
+    <meta
+      name="description"
+      content="A cinematic chapter-based release experience for Vitals Protocol."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="vitals-experience" id="vitals-experience">
+      <div class="scene" aria-hidden="true">
+        <img
+          src="../public/vitals/coastal-compound.webp"
+          alt=""
+          class="scene-image"
+        />
+        <div class="scene-light"></div>
+        <div class="scene-shade"></div>
+        <div class="scene-grain"></div>
+        <div class="ocean-shimmer"></div>
+      </div>
+
+      <canvas class="ambient-vortex" id="ambient-vortex" aria-hidden="true"></canvas>
+
+      <header class="site-header">
+        <div class="brand-lockup">
+          <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true">
+            <path d="M7 8.5 22 36 37 8.5l-8.1 5.1L22 27l-6.9-13.4L7 8.5Z"></path>
+            <path d="M14 7.5 22 22l8-14.5"></path>
+          </svg>
+          <span>Vitals Protocol</span>
+        </div>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="#release-sequence">Release sequence</a>
+          <a href="#manifesto">Manifesto</a>
+          <button type="button" data-open-chapter="reps">Enter chapter 01</button>
+        </nav>
+      </header>
+
+      <section class="hero-copy" id="manifesto">
+        <span class="hero-kicker">The Vitals release sequence · 01—08</span>
+        <h1>A protocol for<br />becoming more alive.</h1>
+        <p>
+          Products arrive as chapters. Each one solves a real behavior loop; together they become
+          a compounding system for human performance and longevity.
+        </p>
+      </section>
+
+      <section class="release-section" id="release-sequence" aria-label="Vitals product chapters">
+        <div class="release-meta">
+          <div>
+            <span>Product universe</span>
+            <strong>Four chapters revealed</strong>
+          </div>
+          <p>Hover to open a glimpse. Select a chapter for the full thesis and mechanism.</p>
+        </div>
+
+        <div class="chapter-stage">
+          <div class="chapter-track" aria-hidden="true"><span></span></div>
+          <div class="chapter-rail" id="chapter-rail"></div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <span>Vitals Protocol · Build in public</span>
+        <div class="footer-progress" aria-label="Four of eight chapters revealed">
+          <i style="width: 50%"></i>
+        </div>
+        <span>04 / 08 revealed</span>
+      </footer>
+    </main>
+
+    <div id="modal-root"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
