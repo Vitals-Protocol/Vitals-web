@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Host: https://vitalsprotocol.xyz
+Sitemap: https://vitalsprotocol.xyz/sitemap.xml

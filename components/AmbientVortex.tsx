@@ -66,7 +66,13 @@ export default function AmbientVortex() {
     let targetPointerX = 0;
     let targetPointerY = 0;
 
-    const particles: Particle[] = Array.from({ length: reducedMotion ? 170 : 260 }, (_, index) => ({
+    const saveData =
+      "connection" in navigator &&
+      Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData);
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    const particleCount = reducedMotion ? 70 : saveData ? 40 : coarse ? 90 : 180;
+
+    const particles: Particle[] = Array.from({ length: particleCount }, (_, index) => ({
       t: Math.random(),
       speed: 0.000018 + Math.random() * 0.000028,
       lane: index % 10,
@@ -164,6 +170,14 @@ export default function AmbientVortex() {
 
     resize();
     window.addEventListener("resize", resize, { passive: true });
+
+    if (saveData) {
+      draw(performance.now());
+      return () => {
+        window.removeEventListener("resize", resize);
+      };
+    }
+
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     document.addEventListener("visibilitychange", onVisibilityChange);
 

@@ -77,9 +77,35 @@ function VitalsGoldMark({ className }: { className?: string }) {
 
 export function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
-    <div className={`brand-lockup${compact ? " brand-lockup--compact" : ""}`}>
+    <a
+      href="/"
+      className={`brand-lockup${compact ? " brand-lockup--compact" : ""}`}
+      aria-label="Vitals Protocol home"
+    >
       <VitalsGoldMark className="brand-mark" />
       <span>Vitals Protocol</span>
+    </a>
+  );
+}
+
+export function SceneBackdrop({ priority = false }: { priority?: boolean }) {
+  return (
+    <div className="scene" aria-hidden="true">
+      <img
+        src="/vitals/coastal-compound-sm.webp"
+        srcSet="/vitals/coastal-compound-sm.webp 1600w, /vitals/coastal-compound.webp 2048w"
+        sizes="100vw"
+        alt=""
+        className="scene-image"
+        width={2048}
+        height={1152}
+        fetchPriority={priority ? "high" : "auto"}
+        decoding="async"
+      />
+      <div className="scene-light" />
+      <div className="scene-shade" />
+      <div className="scene-grain" />
+      <div className="ocean-shimmer" />
     </div>
   );
 }
@@ -106,7 +132,15 @@ function HeroMark() {
   );
 }
 
-function ChapterMedia({ chapter, modal = false }: { chapter: Chapter; modal?: boolean }) {
+function ChapterMedia({
+  chapter,
+  modal = false,
+  priority = false,
+}: {
+  chapter: Chapter;
+  modal?: boolean;
+  priority?: boolean;
+}) {
   if (chapter.media.type === "video") {
     return (
       <video
@@ -129,7 +163,12 @@ function ChapterMedia({ chapter, modal = false }: { chapter: Chapter; modal?: bo
       className={modal ? "modal-media-element" : "chapter-media-element"}
       src={chapter.media.src}
       alt={chapter.media.alt}
+      width={640}
+      height={800}
       draggable={false}
+      loading={priority || modal ? "eager" : "lazy"}
+      decoding="async"
+      fetchPriority={priority ? "high" : "auto"}
       style={{ objectPosition: chapter.media.position }}
     />
   );
@@ -195,7 +234,7 @@ function ChapterCard({
       onKeyDown={handleKeyDown}
     >
       <div className="chapter-media">
-        <ChapterMedia chapter={chapter} />
+        <ChapterMedia chapter={chapter} priority={chapter.id === "reps"} />
         <div className="chapter-media-grade" />
         <div className="chapter-media-vignette" />
       </div>
@@ -229,7 +268,7 @@ function ChapterCard({
             className="chapter-link"
             href={chapter.link.href}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             aria-hidden={!active}
             tabIndex={active ? 0 : -1}
             onClick={(event) => event.stopPropagation()}
@@ -336,7 +375,7 @@ function ChapterModal({ chapter, onClose }: { chapter: Chapter; onClose: () => v
                 className="modal-primary-action"
                 href={chapter.link.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 Visit {chapter.link.label}
                 <span aria-hidden="true">↗</span>
@@ -362,14 +401,6 @@ function ChapterModal({ chapter, onClose }: { chapter: Chapter; onClose: () => v
 function IntroOverlay({ leaving }: { leaving: boolean }) {
   return (
     <div className="intro-overlay" data-leaving={leaving || undefined} aria-hidden="true">
-      <div className="intro-image-wrap">
-        <img
-          src="/vitals/coastal-compound.webp"
-          alt=""
-          className="intro-image"
-          draggable={false}
-        />
-      </div>
       <div className="intro-veil" />
       <div className="intro-grain" />
       <div className="intro-brand">
@@ -391,8 +422,9 @@ export default function VitalsReleaseExperience() {
       setIntro("done");
       return;
     }
-    const leaveTimer = window.setTimeout(() => setIntro("leaving"), 2300);
-    const doneTimer = window.setTimeout(() => setIntro("done"), 3150);
+    const compact = window.matchMedia("(max-width: 800px)").matches;
+    const leaveTimer = window.setTimeout(() => setIntro("leaving"), compact ? 1100 : 2300);
+    const doneTimer = window.setTimeout(() => setIntro("done"), compact ? 1750 : 3150);
     return () => {
       window.clearTimeout(leaveTimer);
       window.clearTimeout(doneTimer);
@@ -429,6 +461,8 @@ export default function VitalsReleaseExperience() {
       tiltY = (event.clientY / window.innerHeight - 0.5) * 2;
       if (!animationFrame) animationFrame = requestAnimationFrame(applyPointer);
     };
+
+    if (window.matchMedia("(pointer: coarse)").matches) return;
 
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     return () => {
@@ -471,13 +505,10 @@ export default function VitalsReleaseExperience() {
 
   return (
     <main ref={rootRef} className="vitals-experience" data-intro={intro}>
-      <div className="scene" aria-hidden="true">
-        <img src="/vitals/coastal-compound.webp" alt="" className="scene-image" />
-        <div className="scene-light" />
-        <div className="scene-shade" />
-        <div className="scene-grain" />
-        <div className="ocean-shimmer" />
-      </div>
+      <a className="skip-link" href="#release-sequence">
+        Skip to chapters
+      </a>
+      <SceneBackdrop priority />
 
       <AmbientVortex />
 
@@ -585,7 +616,7 @@ export default function VitalsReleaseExperience() {
                   key={social.label}
                   href={social.href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label={`Vitals Protocol on ${social.label}`}
                 >
                   {social.icon}
@@ -597,10 +628,10 @@ export default function VitalsReleaseExperience() {
           <nav className="footer-links" aria-label="Footer navigation">
             <div>
               <span>Chapters</span>
-              <a href="https://playreps.xyz" target="_blank" rel="noreferrer">
+              <a href="https://playreps.xyz" target="_blank" rel="noopener noreferrer">
                 Reps <em>live</em>
               </a>
-              <a href="https://doopapp.com" target="_blank" rel="noreferrer">
+              <a href="https://doopapp.com" target="_blank" rel="noopener noreferrer">
                 Guts <em>launching soon</em>
               </a>
               <a href="#release-sequence">Biohack</a>

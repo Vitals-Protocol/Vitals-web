@@ -12,21 +12,21 @@ export default function GutsDoopieGlimpse({ active }: { active: boolean }) {
     const video = videoRef.current;
     if (!video) return;
 
-    if (active) {
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (active && canHover) {
+      if (!video.src) video.src = doopiePreview.src;
       const play = video.play();
       if (play) play.catch(() => undefined);
       return;
     }
 
     video.pause();
-    video.currentTime = 0;
   }, [active]);
 
   return (
     <div
       className="guts-doopie-glimpse"
       data-active={active || undefined}
-      aria-hidden={!active}
     >
       <div className="guts-doopie-glimpse-head">
         <span>Stealth</span>
@@ -38,15 +38,23 @@ export default function GutsDoopieGlimpse({ active }: { active: boolean }) {
         <video
           ref={videoRef}
           className="guts-doopie-reel"
-          src={doopiePreview.src}
           poster={doopiePreview.poster}
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
         />
         {previews.map((doopie) => (
-          <img key={doopie.id} src={doopie.src} alt="" draggable={false} />
+          <img
+            key={doopie.id}
+            src={doopie.src}
+            alt=""
+            width={96}
+            height={96}
+            draggable={false}
+            loading="lazy"
+            decoding="async"
+          />
         ))}
         <span className="guts-doopie-more">+</span>
       </div>

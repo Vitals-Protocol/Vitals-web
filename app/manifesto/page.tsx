@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BrandMark } from "@/components/VitalsReleaseExperience";
+import { BrandMark, SceneBackdrop } from "@/components/VitalsReleaseExperience";
 
 export const metadata: Metadata = {
   title: "Manifesto",
@@ -10,6 +10,22 @@ export const metadata: Metadata = {
     title: "The Vitals Manifesto",
     description:
       "Products as chapters. Health as a compounding system. The vision behind the Vitals Protocol release sequence.",
+    url: "/manifesto",
+    images: [
+      {
+        url: "/vitals/og.webp",
+        width: 1200,
+        height: 630,
+        alt: "The Vitals Manifesto",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Vitals Manifesto",
+    description:
+      "Products as chapters. Health as a compounding system. The vision behind the Vitals Protocol release sequence.",
+    images: ["/vitals/og.webp"],
   },
 };
 
@@ -40,12 +56,7 @@ const upcoming = [
 export default function ManifestoPage() {
   return (
     <main className="vitals-experience manifesto-page">
-      <div className="scene" aria-hidden="true">
-        <img src="/vitals/coastal-compound.webp" alt="" className="scene-image" />
-        <div className="scene-light" />
-        <div className="scene-shade" />
-        <div className="scene-grain" />
-      </div>
+      <SceneBackdrop />
 
       <header className="site-header">
         <BrandMark />

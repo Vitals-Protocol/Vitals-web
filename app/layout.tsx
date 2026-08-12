@@ -1,20 +1,27 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
+const siteUrl = "https://vitalsprotocol.xyz";
 const description =
   "Vitals Protocol is a cinematic release sequence of health products — Reps, Guts, Biohack, and Longevity — each a chapter that compounds into one system for human performance and longevity.";
+const title = "Vitals Protocol — A protocol for becoming more alive";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vitalsprotocol.xyz"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "Vitals Protocol — A protocol for becoming more alive",
+    default: title,
     template: "%s · Vitals Protocol",
   },
   description,
+  applicationName: "Vitals Protocol",
+  authors: [{ name: "Salus Labs, Inc." }],
+  creator: "Salus Labs, Inc.",
+  publisher: "Vitals Protocol",
   keywords: [
     "Vitals Protocol",
     "Reps",
     "Guts",
+    "Doopies",
     "biohacking",
     "longevity",
     "gut health",
@@ -25,34 +32,92 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/",
+    locale: "en_US",
     siteName: "Vitals Protocol",
-    title: "Vitals Protocol — A protocol for becoming more alive",
+    title,
     description,
     images: [
       {
-        url: "/vitals/coastal-compound.webp",
-        width: 2048,
-        height: 1152,
-        alt: "The Vitals Protocol coastal compound at golden hour",
+        url: "/vitals/og.webp",
+        width: 1200,
+        height: 630,
+        alt: "Vitals Protocol — a protocol for becoming more alive",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vitals Protocol — A protocol for becoming more alive",
+    site: "@vitalsprotocol",
+    creator: "@vitalsprotocol",
+    title,
     description,
-    images: ["/vitals/coastal-compound.webp"],
+    images: ["/vitals/og.webp"],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  category: "health",
 };
 
 export const viewport: Viewport = {
   themeColor: "#0b1517",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "Vitals Protocol",
+      url: siteUrl,
+      logo: `${siteUrl}/icon.svg`,
+      sameAs: ["https://x.com/vitalsprotocol"],
+      parentOrganization: {
+        "@type": "Organization",
+        name: "Salus Labs, Inc.",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: "Vitals Protocol",
+      url: siteUrl,
+      description,
+      publisher: { "@id": `${siteUrl}/#organization` },
+      inLanguage: "en-US",
+    },
+  ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href="/vitals/coastal-compound-sm.webp"
+          imageSrcSet="/vitals/coastal-compound-sm.webp 1600w, /vitals/coastal-compound.webp 2048w"
+          imageSizes="100vw"
+          fetchPriority="high"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
