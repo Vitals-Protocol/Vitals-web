@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import AmbientVortex from "./AmbientVortex";
+import GutsDoopieGlimpse from "./GutsDoopieGlimpse";
 import {
   Chapter,
   ChapterDetail,
@@ -181,6 +182,7 @@ function ChapterCard({
       className="chapter-card chapter-card--revealed"
       data-active={active || undefined}
       data-sibling-active={siblingActive || undefined}
+      data-chapter={chapter.id}
       style={style}
       tabIndex={0}
       role="button"
@@ -247,6 +249,8 @@ function ChapterCard({
           <strong>Enter chapter</strong>
         </div>
       </div>
+
+      {chapter.id === "guts" ? <GutsDoopieGlimpse active={active} /> : null}
     </article>
   );
 }
